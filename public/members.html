@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Passport Authentication</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Quicksand|Tajawal&display=swap" rel="stylesheet">
+  
+  <style>
+    body{
+        background: url(https://scontent-atl3-1.xx.fbcdn.net/v/t1.0-9/78502590_10158904244409989_2056737822328487936_o.jpg?_nc_cat=105&_nc_ohc=hysreyr4TR0AQnmThTHccB3XvRbwgqR8yv6Q2RVoecsmaYc6lqdbKR5AQ&_nc_ht=scontent-atl3-1.xx&oh=ac59bed12744735706e2521de32a13e1&oe=5E7AFD89)no-repeat center center fixed;
+        background-size: cover;
+      }
+    .transact{
+      border:1px solid black;
+      border-radius:5px;
+      padding:5px;
+      background:white;
+      margin:2px;
+    }
+    #transactions{
+      background: #eeee99;
+      height:400px;
+      border:solid #eeee99 2px;
+      overflow-y:scroll;
+      border-radius:2px;
+    }
+
+
+    .list-group-item {
+  line-height: 2.5;
+}
+
+.footer{
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  background:#E3E3A6;
+  height:35px;
+  font-size: 12px;
+  text-align: center;
+  clear: both;
+  display: flex;
+  justify-content: space-evenly;
+  align-content: space-between;
+  color: grey;
+}
+.jumbotron{
+  background-color: #eeee99;
+ 
+   
+  margin-top: 20px;
+  
+
+    background: rgb(255, 255, 255);
+    border-radius: .34em;
+    padding: 2em;
+    box-shadow: 0 0 0 .6em #eeee99;
+    outline: .34em solid #eeee99;
+}
+.card {
+  height: 85%;
+}
+
+#chart-one{
+    box-sizing: border-box;
+    width: 400px;
+    height: 355px;
+    border: 15px solid rgb(0, 0, 0);
+    padding: 50px;
+   background-color:  #eeee99;
+    position: relative;
+    float: left;  
+    border-radius:2px;
+}
+
+  </style>
+</head>
+
+<body>
+  <nav class="navbar bg-light">
+      <a class="navbar-brand" style="font-size:35px; font-family: 'Tajawal'"><img src="images/ffz-logo1.PNG" width="50px"> financial frenzy</a>
+      
+      <a href="https://youtu.be/7pjbH5OuBc4?t=60"><img src="images/settings.png" width="30px" alt="alternative text" title="Settings"></a>
+      <!-- <a class="navbar-item" href=/logout>Logout</a> -->
+    </nav>
+
+
+    <
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <h2>Welcome, <b><span class="member-name"></span></b>!</h2>
+          </div>
+
+          
+
+      </div>
+      <div class="jumbotron">
+        <div class="display"><h2>Current Balance ...<span id=balance style="float:right"></span></h2></div>
+        <h6>Your next paycheck is in <span id=nextPay>(loading)</span></h6>
+      </div>
+      
+      <div class="row">
+                          <div class="col-md-6">
+                            <div class="card">
+                              <div class="card-body" id=transactions>
+
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-6">
+                            <div id = "charts"></div>
+                            
+                    
+                              <div id = "chart-one">
+                                
+                                <canvas id="myChart" width="380" height="380"></canvas>
+                    
+                              </div>
+                              
+                            </div>
+                          </div>
+
+      </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+  <script type="text/javascript" src="js/members.js"></script>
+  <footer class="footer">
+    <ul>
+        <ul>© 2019 Gross Developers, Inc</ul>
+        <ul><a data-ga-click="Footer, go to about, text:about" href="https://en.wikipedia.org/wiki/Feeding_frenzy">About</a></ul>
+        <ul></ul>
+    </ul>
+    <a><img src="images/gd-logo5.png" width="30px"></a>
+    <ul>
+        <ul><a data-ga-click="Footer, go to terms, text:terms" href="https://i.imgur.com/jwCCNCO.png">Terms & Privacy</a></ul>
+        <ul><a data-ga-click="Footer, go to help, text:help" href="https://www.youtube.com/watch?v=2Q_ZzBGPdqE">Help</a></ul>
+    </ul>
+</footer>
+
+
+<script>
+
+
+
+  var ctx = document.getElementById('myChart').getContext('2d');;
+ 
+  var myChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: ['Entertainment', 'Utilities & Bills', 'Rent', 'Groceries', 'Unspent Budget', 'Gas'],
+          datasets: [{
+              label: 'Spending Categories',
+              data: [2,6 , 6, 2, 2, 3],
+              backgroundColor: [
+                  'rgba(255, 99, 132, .7)',
+                  'rgba(54, 162, 235, .7)',
+                  'rgba(255, 206, 86, .7)',
+                  'rgba(75, 192, 192, .7)',
+                  'rgba(153, 102, 255, .7)',
+                  'rgba(255, 159, 64, .7)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 3
+          }]
+      },
+      options: {
+        responseive: true,
+          scales: {
+             
+              yAxes: [{
+                gridLines: {
+                color: "rgba(0, 0, 0, 0)",
+            },
+                  Display: false,
+                  ticks: {
+            display: false 
+                      
+                  }
+              }]
+          }
+         
+      }
+  });
+
+
+
+
+
+
+
+
+
+
+  </script
+</body>
+
+</html>

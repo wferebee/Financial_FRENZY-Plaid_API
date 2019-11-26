@@ -1,0 +1,19 @@
+.list-group-item {
+  line-height: 2.5;
+}
+
+.footer{
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  background:#E3E3A6;
+  height:35px;
+  font-size: 12px;
+  text-align: center;
+  clear: both;
+  display: flex;
+  justify-content: space-evenly;
+  align-content: space-between;
+  color: grey;
+}
